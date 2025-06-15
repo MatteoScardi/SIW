@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FishingWorld - Modifica Pesce</title>
+    <link rel="stylesheet" href="/stileFish.css?version=2" />
+</head>
+<body>
+    <header>
+        <h1><a href="/">FishingWorld</a></h1>
+    </header>
+
+    <div class="container fish-detail-container">
+        <div th:if="${rod}">
+            <form th:action="@{'/rod/' + ${rod.id} + '/edit'}" method="POST" th:object="${rod}">
+                <div class="fish-details">
+					<div>
+                        <label for="name">Nome:</label>
+                        <input type="text" id="name" th:field="*{name}" />
+                    </div>
+					
+                    <div>
+                        <label for="type">Tipo:</label>
+                        <input type="text" id="type" th:field="*{type}" />
+                    </div>
+					
+                    <div>
+                        <label for="length">Lunghezza:</label>
+                        <input type="text" id="length" th:field="*{length}" />
+                    </div>
+					
+					<div>
+						<label for="model">Modello:</label>
+						<input type="text" id="model" th:field="*{model}" />
+					</div>
+										
+                    <div>
+                        <label for="description">Descrizione:</label>
+                        <textarea id="description" th:field="*{description}"></textarea>
+                    </div>
+					
+                    <div>
+                        <label for="urlImage">URL Immagine:</label>
+                        <input type="text" id="urlImage" th:field="*{urlImage}" />
+                    </div>
+					<br>
+                    <div class="form-actions">
+                        <button type="submit" class="button save-button">Salva Modifiche</button>
+                        <a th:href="@{'/rod/' + ${rod.id}}" class="button cancel-button">Annulla</a>
+                    </div>
+					
+                </div>
+            </form>
+        </div>
+        <div th:unless="${rod}" class="no-fish">
+            <p>Nessuna canna da pesca trovata.</p>
+        </div>
+    </div>
+</body>
+</html>

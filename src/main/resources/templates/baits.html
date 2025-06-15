@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <title>FishingWorld</title>
+    <link rel="stylesheet" href="/stileFish.css?version=2" />
+</head>
+<body>
+    <header>
+        <h1><a href="/">FishingWorld</a></h1>
+    </header>
+
+    <div class="container">
+        <div id="elementi">
+            <br>
+            <div th:if="${baits.isEmpty()}" id="nessun-pesce">Nessuna esca presente</div>
+
+            <div th:unless="${baits.isEmpty()}">
+                <div th:each="bait : ${baits}" class="elemento">
+                    <a th:href="@{'/bait/' + ${bait.id}}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; height: calc(100% - 40px);">
+                            <div>
+                                <div>
+                                    <h2><span th:text="${bait.name}">NomeEsca</span></h2>
+                                    <div>Tipo: <span th:text="${bait.type}"></span></div>
+                                    <div th:if="${bait.description}" th:text="${bait.description}"></div>
+                                </div>
+                            </div>
+                            <div th:if="${bait.urlImage}">
+                                <img width="200" height="200" th:src="${bait.urlImage}" style="border-radius: 5px; margin-left: 20px;"/>
+                            </div>
+                        </div>
+                    </a>
+					<div class="delete-button-container">
+					    <form th:action="@{'/bait/' + ${bait.id} + '/delete'}" method="POST">
+					        <button type="submit" class="delete-button">
+					            <img src="trash.svg" >
+					        </button>
+					    </form>
+					</div>
+                </div>
+            </div>
+
+            <br>
+            <div id="aggiungi-pesce-container">
+                <a href="/formNewBait" class="button" id="aggiungi-elemento-btn">Nuova Esca</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FishingWorld - Dettagli Pesce</title>
+    <link rel="stylesheet" href="/stileFish.css?version=2" />
+</head>
+<body>
+    <header>
+        <h1><a href="/">FishingWorld</a></h1>
+    </header>
+
+    <div class="container fish-detail-container">
+        	<div th:if="${bait}">
+            	<div class="fish-image-container">
+                <img th:src="${bait.urlImage}" width="960px" height="650px" alt="${bait.name}" class="fish-detail-image"/>
+            </div>
+			
+            <div id="fish-details-container">
+                <h1 class="fish-detail-name" th:text="${bait.name}" style="font-size: 55px;">NomeEsca</h1>
+				
+                <div class="fish-detail-info">	
+                    <h2><span class="label">Tipo:</h2></span>
+                    <span th:text="${bait.type}">Tipo</span>
+                </div>
+
+                <div class="fish-detail-description">
+                    <h2 class="label">Descrizione:</h2>
+                    <p th:text="${bait.description}">Descrizione dell'esca</p>
+                </div>
+				
+				<br>
+                <a th:href="@{'/formEditBait/' + ${bait.id}}" class="cancel-button">Modifica dettagli</a>
+            </div>
+        </div>
+		
+		
+		<div class="relations" style="padding-top: 30px;">
+		    <h2 style="margin-top: 60px;">Pesci raccomandate:</h2>
+		    <ul th:if="${!bait.fish.isEmpty()}" style="list-style-type: disclosure-closed; padding-left: 16px;">
+		        <li th:each="fish : ${bait.fish}">
+		            <a th:href="@{'/fish/' + ${fish.id}}" style= "color: teal;">
+		                <span th:text="${fish.name}" class="link-obj">Nome Pesce</span>
+		            </a>
+		        </li>
+		    </ul>
+		    <p th:if="${bait.fish.isEmpty()}" style="height: 60px; line-height: 50px;">Nessun pesce associato a questa esca.</p>
+		</div>
+			
+		
+		
+		
+	<br>
+    <div>
+		<a href="/baits" class="button" id="aggiungi-elemento-btn">Torna alla lista</a>
+	</div>
+    
+</body>
+</html>
