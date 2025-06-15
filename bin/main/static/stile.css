@@ -1,0 +1,126 @@
+#flex-container {
+    display: flex; /* Attiva il layout Flexbox per il contenitore */
+    flex-wrap: wrap; /* Permette agli elementi di andare a capo su una nuova riga */
+    justify-content: space-around; /* Distribuisce lo spazio tra gli elementi e intorno ad essi */
+    margin: 20px auto; /* Centra il contenitore orizzontalmente e aggiunge un po' di margine verticale */
+    max-width: 900px; /* Imposta una larghezza massima per il contenitore (opzionale) */
+}
+
+.col {
+    background-color: white;
+    border: 2px solid black;
+    width: calc(50% - 20px); /* Imposta la larghezza al 50% meno un po' di spazio per il margine */
+    height: 175px;
+    margin-bottom: 20px; /* Aumenta il margine inferiore per lo spazio tra le righe */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+body {
+    background: linear-gradient(to bottom, #cce6ff, #ffffff);
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-image: url('Fishing.png');
+    background-size: cover;
+    background-position: center;
+    height: 80vh; /* Imposta l'altezza al 100% della viewport height */
+    position: relative;
+    color: white;
+    text-align: center;
+    width: 100%;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.4); /* leggero scuro sopra l'immagine */
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.site-title {
+    font-size: 100px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero-text {
+    font-size: 28px;
+    max-width: 800px;
+    line-height: 1.4;
+}
+
+
+section {
+    background-color: rgba(0, 0, 0, 0.2);;
+    margin: 100px 250px;
+	height: 750px;
+	border-radius: 10px;
+}
+
+footer {
+    background-color: black;
+    height: 100px;
+    width: 100%; /* Assicura che il footer occupi tutta la larghezza */
+}
+
+p {
+    background-color: khaki;
+    height: 65px;
+    margin-bottom: 75px;
+	border-radius: 10px;
+}
+
+
+.icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 10px;
+    object-fit: cover; 
+}
+
+.col span {
+    font-size: 16px;
+    color: #555;
+}
+
+a {
+    text-decoration: none;
+    display: block;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+a:hover {
+    background-color: #f0f0f0;
+}
+
+.intro-text {
+    font-size: 20px;
+    color: #333;
+    padding: 30px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.col small {
+    font-size: 14px;
+    color: #777;
+    margin-top: 5px;
+    display: block;
+    text-align: center;
+}
+
+

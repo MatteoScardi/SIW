@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <title>FishingWorld</title>
+    <link rel="stylesheet" href="/stileFish.css?version=2" />
+</head>
+<body>
+    <header>
+        <h1><a href="/">FishingWorld</a></h1>
+    </header>
+
+    <div class="container">
+        <div id="elementi">
+            <br>
+            <div th:if="${rods.isEmpty()}" id="nessun-pesce">Nessuna canna da pesca presente</div>
+
+            <div th:unless="${rods.isEmpty()}">
+                <div th:each="rod : ${rods}" class="elemento">
+                    <a th:href="@{'/rod/' + ${rod.id}}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; height: calc(100% - 40px);">
+                            <div>
+                                <div>
+                                    <h2><span th:text="${rod.name}">NomeCannaDaPesca</span></h2>
+                                    <div>Tipo: <span th:text="${rod.type}"></span></div>
+                                    <div>Lunghezza: <span th:text="${rod.length}"></span></div>
+									<div>Modello: <span th:text="${rod.model}"></span></div>
+                                    <div th:if="${rod.description}" th:text="${rod.description}"></div>
+                                </div>
+                            </div>
+                            <div th:if="${rod.urlImage}">
+                                <img width="200" height="200" th:src="${rod.urlImage}" style="border-radius: 5px; margin-left: 20px;"/>
+                            </div>
+                        </div>
+                    </a>
+					<div class="delete-button-container">
+					    <form th:action="@{'/rod/' + ${rod.id} + '/delete'}" method="POST">
+					        <button type="submit" class="delete-button">
+					            <img src="trash.svg" >
+					        </button>
+					    </form>
+					</div>
+                </div>
+            </div>
+
+            <br>
+            <div id="aggiungi-pesce-container">
+                <a href="/formNewRod" class="button" id="aggiungi-elemento-btn">Nuova Canna da Pesca</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FishingWorld - Dettagli Pesce</title>
+    <link rel="stylesheet" href="/stileFish.css?version=3" />
+</head>
+<body>
+    <header>
+        <h1><a href="/">FishingWorld</a></h1>
+    </header>
+
+    <div class="container fish-detail-container">
+        <div th:if="${fish}">
+            <div class="fish-image-container">
+                <img th:src="${fish.urlImage}" width="960px" height="650px" alt="${fish.name}" class="fish-detail-image"/>
+            </div>
+            <div id="fish-details-container">
+                <h1 class="fish-detail-name" th:text="${fish.name}" style="font-size: 55px;">NomePesce</h1>
+                <div class="fish-detail-info">
+                    <h3><span class="label">Nome Scientifico:</h3></span>
+                    <span th:text="${fish.scientificName}">Nome Scientifico</span>
+                </div>
+                <div class="fish-detail-info">
+                    <h3><span class="label">Stagione:</h3></span>
+                    <span th:text="${fish.season}">Stagione</span>
+                </div>
+                <div class="fish-detail-description">
+                    <h3 class="label">Descrizione:</h3>
+                    <p th:text="${fish.description}">Descrizione del pesce...</p>
+                </div>
+				
+            	<br>
+				<a th:href="@{'/formEditFish/' + ${fish.id}}" class="cancel-button">Modifica dettagli</a>					
+		</div>		
+									
+		<div class="relations" style="padding-top: 50px;">
+			
+			
+			<h2 style="margin-top: 40px;">Luoghi di pesca dove trovarli :</h2>
+			                    <ul th:if="${!fish.fishingPlace.isEmpty()}" style="list-style-type: disclosure-closed; padding-left: 16px;">
+			                        <li th:each="place : ${fish.fishingPlace}">
+										<a th:href="@{'/place/' + ${place.id}}" style= "color: teal;">
+										    <span th:text="${place.name}" class="link-obj">Nome Pesce</span>
+										</a>
+			                        </li>
+			                    </ul>
+			                    <p th:if="${fish.fishingPlace.isEmpty()}" style="height: 60px; line-height: 50px;">Nessun luogo di pesca associato.</p>
+			               
+							
+							
+							
+			<h2 style="margin-top: 60px;">Esche raccomandate:</h2>
+                    <ul th:if="${!fish.bait.isEmpty()}" style="list-style-type: disclosure-closed; padding-left: 16px;">
+                        <li th:each="bait : ${fish.bait}">
+							<a th:href="@{'/bait/' + ${bait.id}}" style= "color: teal;">
+																	    <span th:text="${bait.name}" class="link-obj">Nome Pesce</span>
+																	</a>
+                            <form th:action="@{'/fish/' + ${fish.id} + '/removeBait'}" method="post" style="display:inline;">
+                                <input type="hidden" name="baitToRemove" th:value="${bait.id}" />
+								<button type="submit" class="delete-button" style="width: 40px; height: 40px;">
+									<img src="/trash.svg" >
+								</button>
+                            </form>
+                        </li>
+                    </ul>
+                    <p th:if="${fish.bait.isEmpty()}" style="height: 60px; line-height: 50px;">Nessuna esca associata.</p>       
+			 </div>
+                
+        
+			 
+			     
+
+
+			<div style="padding-top: 20px;">
+				<h3 class="form-aggiungi-titolo">Aggiungi Esche</h3>
+				<form th:action="@{'/fish/' + ${fish.id} + '/addBait'}" method="post" class="form-aggiungi-elementi" style="padding: 0px;">
+				    <div th:if="${!allBait.isEmpty()}" th:each="bait : ${allBait}" style="width: 30px; padding-right: 945px; display: block ruby; margin-block:10px;">
+				        <input type="checkbox" name="baitToAdd" th:value="${bait.id}" th:id="'bait_' + ${bait.id}"/>
+				        <label th:for="'bait_' + ${bait.id}" th:text="${bait.name}" style="width: 600px; text-align: initial; padding-left: 10px;" ></label>
+				    </div>
+				    <p th:if="${allBait.isEmpty()}" style="padding-right: 360px;"> Nessuna esca disponibile.
+				        <br><a th:href="@{/formNewBait}" class="insert-new">Inserisci nuova esca </a>
+				    </p>
+				    <button th:if="${!allBait.isEmpty()}" type="submit" class="button save-button" style="width: auto">Aggiungi Esche Selezionate</button>
+				</form>
+			
+
+			<br>
+
+			</div>
+
+			
+			
+            <br>
+        </div>
+
+        <br>
+        <div>
+            <a href="/fishes" class="button" id="aggiungi-elemento-btn">Torna alla lista</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <title>FishingWorld</title>
+    <link rel="stylesheet" href="/stileFish.css?version=2" />
+</head>
+<body>
+    <header>
+        <h1><a href="/">FishingWorld</a></h1>
+    </header>
+
+    <div class="container">
+        <div id="elementi">
+            <br>
+            <div th:if="${fishes.isEmpty()}" id="nessun-pesce">Nessun pesce presente</div>
+
+            <div th:unless="${fishes.isEmpty()}">
+                <div th:each="fish : ${fishes}" class="elemento">
+                    <a th:href="@{'/fish/' + ${fish.id}}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; height: calc(100% - 40px);">
+                            <div>
+                                <div>
+                                    <h2><span th:text="${fish.name}">NomePesce</span></h2>
+                                    <div>Nome Scientifico: <span th:text="${fish.scientificName}"></span></div>
+                                    <div>Stagione: <span th:text="${fish.season}"></span></div>
+                                    <div th:if="${fish.description}" th:text="${fish.description}"></div>
+                                </div>
+                            </div>
+                            <div th:if="${fish.urlImage}">
+                                <img width="200" height="200" th:src="${fish.urlImage}" style="border-radius: 5px; margin-left: 20px;"/>
+                            </div>
+                        </div>
+                    </a>
+					<div class="delete-button-container">
+					    <form th:action="@{'/fish/' + ${fish.id} + '/delete'}" method="POST">
+					        <button type="submit" class="delete-button">
+					            <img src="trash.svg" >
+					        </button>
+					    </form>
+					</div>
+                </div>
+            </div>
+
+            <br>
+            <div id="aggiungi-pesce-container">
+                <a href="/formNewFish" class="button" id="aggiungi-elemento-btn">Nuovo pesce</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

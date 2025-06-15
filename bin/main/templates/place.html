@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FishingWorld - Dettagli Posto</title>
+    <link rel="stylesheet" href="/stileFish.css?version=2" />
+</head>
+<body>
+    <header>
+        <h1><a href="/">FishingWorld</a></h1>
+    </header>
+
+    <div class="container fish-detail-container">
+        <div th:if="${place}">
+            <div class="fish-image-container">
+                <img th:src="${place.urlImage}" width="960px" height="650px" alt="${place.name}" class="fish-detail-image"/>
+            </div>
+            <div id="fish-details-container">
+                <h1 class="fish-detail-name" th:text="${place.name}" style="font-size: 55px;">NomePosto</h1>
+                <div class="fish-detail-info">
+                    <h3><span class="label">Tipo:</span></h3>
+                    <span th:text="${place.type}">Tipo</span>
+                </div>
+                <div class="fish-detail-info">
+                    <h3><span class="label">Note:</span></h3>
+                    <span th:text="${place.notes}">Note</span>
+                </div>
+                <div class="fish-detail-description">
+                    <h3 class="label">Descrizione:</h3>
+                    <p th:text="${place.description}">Descrizione del posto</p>
+                </div>
+
+				<br>
+                <a th:href="@{'/formEditPlace/' + ${place.id}}" class="cancel-button">Modifica dettagli</a>
+            </div>
+        </div>
+        <div th:unless="${place}" class="no-fish">
+            <p>Nessun posto trovato.</p>
+        </div>
+
+
+		<div class="relations" style="padding-top: 50px;">
+					
+			<h2 style="margin-top: 40px;">Canne da pesca raccomandate :</h2>
+							<ul th:if="${!place.fishingRod.isEmpty()}" style="list-style-type: disclosure-closed; padding-left: 16px;">
+								<li th:each="currentRod : ${place.fishingRod}">
+									<a th:href="@{'/rod/' + ${currentRod.id}}" style= "color: teal;">
+										<span th:text="${currentRod.name}" class="link-obj">Nome Canna</span> 
+									</a>		
+									<form th:action="@{'/place/' + ${place.id} + '/removeFishingRod'}" method="post" style="display:inline;">
+										<input type="hidden" name="rodToRemove" th:value="${currentRod.id}" />
+										<button type="submit" class="delete-button" style="width: 40px; height: 40px;">
+											<img src="/trash.svg" alt="Rimuovi" style="vertical-align: middle;">
+										</button>
+									</form>
+								</li>
+							</ul>
+						<p th:if="${place.fishingRod.isEmpty()}" style="height: 60px; line-height: 50px;">Nessuna canna da pesca associata.</p>
+
+			
+									
+					<h2 style="margin-top: 60px;">Pesci che si possono trovare:</h2>
+		                    <ul th:if="${!place.fish.isEmpty()}" style="list-style-type: disclosure-closed; padding-left: 16px;">
+		                        <li th:each="fish : ${place.fish}">
+					
+									<a th:href="@{'/fish/' + ${fish.id}}" style= "color: teal;">
+										<span th:text="${fish.name}" class="link-obj">Nome Canna</span> 
+									</a>	
+		                            <form th:action="@{'/place/' + ${place.id} + '/removeFish'}" method="post" style="display:inline;">
+		                                <input type="hidden" name="fishToRemove" th:value="${fish.id}" />
+										<button type="submit" class="delete-button" style="width: 40px; height: 40px;">
+											<img src="/trash.svg" >
+										</button>
+		                            </form>
+		                        </li>
+		                    </ul>
+		                    <p th:if="${place.fish.isEmpty()}" style="height: 60px; line-height: 50px;">Nessuna pesce associato.</p>       
+					 </div>
+		                
+		        
+					 
+					     
+
+
+					<div style="padding-top: 20px;">
+						<h3 class="form-aggiungi-titolo">Aggiungi Pesce presente</h3>
+						<form th:action="@{'/place/' + ${place.id} + '/addFish'}" method="post" class="form-aggiungi-elementi" style="padding: 0px;">
+						    <div th:if="${!allFish.isEmpty()}" th:each="fish : ${allFish}" style="width: 30px; padding-right: 945px; display: block ruby; margin-block:10px;">
+						        <input type="checkbox" name="fishToAdd" th:value="${fish.id}" th:id="'fish_' + ${fish.id}"/>
+						        <label th:for="'fish_' + ${fish.id}" th:text="${fish.name}" style="width: 600px; text-align: initial; padding-left: 10px;" ></label>
+						    </div>
+						    <p th:if="${allFish.isEmpty()}" style="padding-right: 360px;"> Nessun pesce disponibile.
+						        <br><a th:href="@{/formNewFish}" class="insert-new">Inserisci nuovo pesce </a>
+						    </p>
+						    <button th:if="${!allFish.isEmpty()}" type="submit" class="button save-button" style="width: auto">Aggiungi Pesci Selezionati</button>
+						</form>
+					
+						
+						<div style="padding-top: 20px;">
+												    <h3 class="form-aggiungi-titolo">Aggiungi Canna da Pesca presente</h3>
+												    <form th:action="@{'/place/' + ${place.id} + '/addFishingRod'}" method="post" class="form-aggiungi-elementi" style="padding: 0px;">
+												        <div th:if="${!allRods.isEmpty()}" th:each="rod : ${allRods}" style="width: 30px; padding-right: 945px; display: block ruby; margin-block:10px;">
+												            <input type="checkbox" name="rodToAdd" th:value="${rod.id}" th:id="'fishingRod_' + ${rod.id}"/>
+												            <label th:for="'fishingRod_' + ${rod.id}" th:text="${rod.name}" style="width: 600px; text-align: initial; padding-left: 10px;" ></label>
+												        </div>
+												        <p th:if="${allRods.isEmpty()}" style="padding-right: 360px;"> Nessua canna da pesca disponibile.
+												            <br><a th:href="@{/formNewRod}" class="insert-new">Inserisci nuova canna da pesca </a>
+												        </p>
+												        <button th:if="${!allRods.isEmpty()}" type="submit" class="button save-button" style="width: auto">Aggiungi Canne Selezionate</button>
+												    </form>
+												</div>
+												
+												
+												
+					<br>
+
+					</div>
+		
+		
+		
+
+		<br>
+        <div>
+            <a href="/places" class="button" id="aggiungi-elemento-btn">Torna alla lista</a>
+        </div>
+    </div>
+</body>
+</html>
